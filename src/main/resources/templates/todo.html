@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+ <link rel="stylesheet" type="text/css" href="/static/styles.css">
+
+<head>
+  <meta charset="UTF-8">
+  <title>todo</title>
+
+</head>
+
+<body >
+
+<div class="topnav" id="myTopnav">
+
+  <a th:href="@{/home}" class="active"><img  class="active" src="../static/images/Batman-logo.png"
+                                             width="40"></a>
+  <a th:href="@{/gadgets}">Gadgets</a>
+  <a th:href="@{/todo}">To Do List</a>
+  <a  th:href="@{/logout}">Log Out</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+
+
+<div style="text-align: center;">
+
+  <h1 style=" width: 100%; margin-top: 60px; "> To Do List </h1>
+
+
+
+
+  <h2>Your list</h2>
+  <div style="text-align: left;">
+    <table>
+      <thead>
+      <tr>
+
+        <th>Subject</th>
+        <th>Content</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="todo : ${todos}">
+
+        <td th:text="${todo.subject}"></td>
+        <td th:text="${todo.content}"></td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+
+
+<a    th:href="@{/admin-page}" class="footer">
+  <div style="margin-right: 10px;">
+    Admin
+  </div>
+</a>
+
+</body>
+</html>

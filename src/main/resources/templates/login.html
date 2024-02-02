@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" href="...resources/styles.css">
+    <style>
+html, body {
+  height: 100%;
+  margin: 0;
+  background: rgb(16,16,16);
+}
+
+.full-height {
+  height: 100%;
+  background: rgb(16,16,16);
+}
+</style>
+
+</head>
+<body >
+<div class="full-height" style="text-align: center; background-color: rgb(16,16,16);  ">
+
+
+
+<div style=" margin-top: 100px; ">
+
+
+        <div style=" margin-top:20px; color:white;  flex;">
+
+            <img style=" "  src="../static/images/Batman-logo.png" alt="This image could not be loaded">
+
+            <form th:action="@{/login}"
+                  method="post">
+
+            <div style="margin-bottom: 10px; margin-top: 20px;">
+                <label  for="username">Username</label>
+                <input name="username" placeholder="username..." type="text" id="username" required autofocus>
+            </div>
+
+
+                <div style="margin-bottom: 10px;">
+                    <label for="password">Password</label>
+                    <input name="password" placeholder="password..." type="password" id="password" required autofocus>
+                </div>
+
+<div style=" margin-right: 100px;">
+    <label for="remember-me">Remember me</label>
+    <input name="remember-me" type="checkbox" id="remember-me">
+
+</div>
+
+
+
+
+            <button style=" margin-left: 160px;" type="submit">LOGIN</button>
+
+            <div th:if="${param.error}">
+                <p class="text-danger">
+                    [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+            </div>
+
+    </form>
+
+        </div>
+
+
+    <a style="color:white;" th:href="@{/register}">Register</a>
+
+</div>
+
+</div>
+
+
+
+</body>
+</html>
