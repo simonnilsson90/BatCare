@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
 <link rel="stylesheet" type="text/css" href="/static/styles.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
 <head>
     <meta charset="UTF-8">
-    <title>admin-page</title>
+    <title>admin</title>
 
 </head>
+<body class="body" >
 
 <style>
+    input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+   background-color: #333;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
 
 </style>
 
-<body>
+
+
+
 
 <div class="topnav" id="myTopnav">
 
@@ -39,44 +70,49 @@ function myFunction() {
 }
 </script>
 
-<div style=" text-align: center;">
-
-
-<div >
-    <h1> Alfred Admin </h1>
-
-    <h2> New task</h2>
-
-    <div style=" margin-bottom: 50px;  margin: 0 auto; 140px; width:50%;" class="card">
 
 
 
+
+<h1 style=" text-align: center; width: 100%; margin-top: 60px; "> Alfred Admin </h1>
+<h2 style=" text-align: center; width: 100%; margin-top: 60px; "> New task</h2>
+
+<div style=" margin-bottom: 50px;  margin: 0 auto; 140px; width:50%;" class="card">
+
+    <div>
         <form method="post" th:action="@{/todo/post}" th:object="${toDo}">
-            <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject" required>
-            <br>
 
-            <label for="content">Content:</label>
-            <textarea id="content" name="content" required></textarea>
-            <br>
-
-            <input type="submit" value="Create ToDo">
+            <label for="subject">Subject</label>
+            <select id="subject"  name="subject" required>
+                <option value="Wayne Enterprices">Wayne Enterprices</option>
+                <option value="GPD">GPD</option>
+                <option value="Wayne Manor">Wayne Manor</option>
+                <option value="Robin">Robin</option>
+                <option value="Arkham Asylum">Arkham Asylum</option>
+                <option value="Lucius Fox">Lucius Fox</option>
+                <option value="Other">Other</option>
+            </select>
+            <label for="content">Content</label>
+            <input type="text" id="content" name="content" placeholder="Content..">
+            <input type="submit" value="Create">
         </form>
-
-
     </div>
-
-
-</div>
 </div>
 
-</div>
+
+
+
+
+
+
 
 <a    th:href="@{/admin-page}" class="footer">
-    <div style="margin-right: 10px;">
+    <div style="margin-right: 20px;">
         Admin
     </div>
 </a>
+
+
 
 </body>
 </html>

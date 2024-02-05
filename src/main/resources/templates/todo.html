@@ -2,14 +2,40 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
  <link rel="stylesheet" type="text/css" href="/static/styles.css">
+<link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
 
 <head>
   <meta charset="UTF-8">
   <title>todo</title>
 
+  <style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #333;
+  color: white;
+}
+</style>
+
 </head>
 
-<body >
+<body class="body" >
 
 <div class="topnav" id="myTopnav">
 
@@ -37,40 +63,46 @@ function myFunction() {
 </script>
 
 
-<div style="text-align: center;">
+<div >
 
-  <h1 style=" width: 100%; margin-top: 60px; "> To Do List </h1>
+  <h1 style=" text-align: center; width: 100%; margin-top: 60px; "> Bat List </h1>
+  <div class="custom-div">
 
-
-
-
-  <h2>Your list</h2>
-  <div style="text-align: left;">
-    <table>
-      <thead>
+    <table id="customers">
       <tr>
-
         <th>Subject</th>
         <th>Content</th>
       </tr>
-      </thead>
-      <tbody>
       <tr th:each="todo : ${todos}">
-
         <td th:text="${todo.subject}"></td>
         <td th:text="${todo.content}"></td>
       </tr>
-      </tbody>
     </table>
 
+    <style>
+    @media screen and (max-width: 767px) {
+      .custom-div {
+        margin-left: 10px; /* Justera till önskad mindre storlek för mindre skärmar */
+        margin-right: 10px; /* Justera till önskad mindre storlek för mindre skärmar */
+      }
+      /* ... Andra stilar för mindre skärmar om det behövs ... */
+    }
+
+    @media screen and (min-width: 768px) {
+      .custom-div {
+        margin-left: 80px; /* Justera till önskad storlek för större skärmar */
+        margin-right: 80px; /* Justera till önskad storlek för större skärmar */
+      }
+      /* ... Andra stilar för större skärmar om det behövs ... */
+    }
+  </style>
   </div>
 
 </div>
 
 
-
 <a    th:href="@{/admin-page}" class="footer">
-  <div style="margin-right: 10px;">
+  <div style="margin-right: 20px;">
     Admin
   </div>
 </a>
