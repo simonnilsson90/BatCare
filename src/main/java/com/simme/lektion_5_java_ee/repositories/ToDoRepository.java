@@ -14,6 +14,6 @@ public interface ToDoRepository extends CrudRepository<ToDo, Long> {
 
     Optional<ToDo> findByContent(String content);
 
-
+    Optional<ToDo> findById(long id);
 
 }

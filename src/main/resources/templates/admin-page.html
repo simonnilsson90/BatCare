@@ -12,6 +12,45 @@
 <body class="body" >
 
 <style>
+    @media screen and (max-width: 767px) {
+      .custom-div {
+        margin-left: 10px; /* Justera till önskad mindre storlek för mindre skärmar */
+        margin-right: 10px; /* Justera till önskad mindre storlek för mindre skärmar */
+      }
+      /* ... Andra stilar för mindre skärmar om det behövs ... */
+    }
+
+    @media screen and (min-width: 768px) {
+      .custom-div {
+        margin-left: 80px; /* Justera till önskad storlek för större skärmar */
+        margin-right: 80px; /* Justera till önskad storlek för större skärmar */
+      }
+      /* ... Andra stilar för större skärmar om det behövs ... */
+    }
+  </style>
+
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+#customers tr:hover {background-color: #ddd;}
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #333;
+  color: white;
+}
+
     input[type=text], select {
   width: 100%;
   padding: 12px 20px;
@@ -31,6 +70,7 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
 }
 
 input[type=submit]:hover {
@@ -40,9 +80,6 @@ input[type=submit]:hover {
 
 
 </style>
-
-
-
 
 
 <div class="topnav" id="myTopnav">
@@ -98,21 +135,50 @@ function myFunction() {
         </form>
     </div>
 </div>
+</div>
+
+
+<h2 style=" text-align: center; width: 100%; margin-top: 60px; "> Edit Users</h2>
+
+ <div  class="custom-div">
+
+<form th:action="@{/username/delete}" method="post">
+    <table id="customers">
+        <tr>
+            <th>Username</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="user : ${users}">
+
+            <td th:text="${user.username}">
+
+            </td>
+            <td><label class="container">
+                <div class="checkbox-wrapper-1">
+                    <input name="usernames" th:value="${user.username}" id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
+                    <label for="example-1"></label>
+                </div>
+            </label>
+
+        </tr>
+
+    </table>
+    <input style="margin-bottom:10px;" type="submit" value="Submit">
+</form>
 
 
 
 
+</div>
+
+<div style=" margin-top: 30px">hejehj</div>
 
 
-
-
-<a    th:href="@{/admin-page}" class="footer">
-    <div style="margin-right: 20px;">
+<a th:href="@{/admin-page}" class="footer">
+    <div style="margin-right: 20px; ;">
         Admin
     </div>
 </a>
-
-
 
 </body>
 </html>
