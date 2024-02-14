@@ -11,6 +11,19 @@
 </head>
 <body class="body" >
 
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
+
+</script>
+
 <style>
     @media screen and (max-width: 767px) {
       .custom-div {
@@ -77,17 +90,69 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
 
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #333;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: #333;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
 
 </style>
 
 
 <div class="topnav" id="myTopnav">
 
-    <a th:href="@{/home}" class="active"><img  class="active" src="../static/images/Batman-logo.png"
-                                               width="40"></a>
+    <a th:href="@{/}" class="active"><img  class="active" src="../static/images/Batman-logo.png" width="40"></a>
     <a th:href="@{/gadgets}">Gadgets</a>
     <a th:href="@{/todo}">To Do List</a>
+    <a th:href="@{/about}">About</a>
     <a  th:href="@{/logout}">Log Out</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
@@ -96,82 +161,141 @@ input[type=submit]:hover {
 
 
 
+
+<div style="display: flex; justify-content: center; margin-top: 100px;">
+    <h1 style="padding: 10px; color: black; text-align: center;
+         -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px; "
+    >Alfred Admin</h1>
+</div>
+
+
+</div>
+
+
 <script>
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
+    function openForm(userId) {
+    console.log(userId)
+    document.getElementById("userId").innerText = userId;
+    document.getElementById("userIdInput").value = userId; // Sätt användarid:t i det gömda inputfältet
+    document.getElementById("myForm").style.display = "block"; // Visa popup-fönstret
+    console.log(" Inne i funktionen! user id should be: ", userId)
+}
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+
+    function showUpdateConfirmation() {
+  alert("User updated");
+}
+
+ function showTaskConfirmation() {
+  alert("Task created");
+}
+
+</script>
+
+
+
+<div style="text-align: center;" class="tab">
+    <button class="tablinks" onclick="openCity(event, 'London')">New Task</button>
+    <button class="tablinks" onclick="openCity(event, 'Paris')">Edit users</button>
+
+</div>
+
+<div id="London" class="tabcontent" style="display: none;">
+    <h2 style=" text-align: center; width: 100%; margin-top: 60px; "> New task</h2>
+
+    <div style=" margin-bottom: 50px;  margin: 0 auto; 140px; width:50%;" class="card">
+
+        <div>
+            <form method="post" th:action="@{/todo/post}" th:object="${toDo}" onsubmit="showTaskConfirmation()" >
+
+                <label for="subject">Subject</label>
+                <select id="subject"  name="subject" required>
+                    <option value="Wayne Enterprices">Wayne Enterprices</option>
+                    <option value="GPD">GPD</option>
+                    <option value="Wayne Manor">Wayne Manor</option>
+                    <option value="Robin">Robin</option>
+                    <option value="Arkham Asylum">Arkham Asylum</option>
+                    <option value="Lucius Fox">Lucius Fox</option>
+                    <option value="Other">Other</option>
+                </select>
+                <label for="content">Content</label>
+                <input type="text" id="content" name="content" placeholder="Content..">
+                <input type="submit" value="Create">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="Paris" class="tabcontent" style="display: none;">
+    <h2 style=" text-align: center; width: 100%; margin-top: 60px; "> Edit Users</h2>
+
+    <div  class="custom-div">
+
+        <form id="deleteForm" th:action="@{/id/delete}" method="post">
+            <table id="customers">
+                <tr>
+
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Action</th>
+
+                </tr>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.password}"></td>
+
+                    <td>
+                        <button type="submit" name="ids" th:value="${user.id}">Delete</button>
+                        <button type="button" th:onclick="'openForm(\'' + ${user.id} + '\')'">Edit</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+
+
+    <div class="form-popup" id="myForm">
+        <form th:action="@{/update}" method="post" class="form-container" onsubmit="showUpdateConfirmation()">
+            <h1>Edit user with id: <span id="userId"></span></h1>
+            <input type="hidden" id="userIdInput" name="id"/>
+            <label for="content">Username</label>
+            <input th:name="username" type="text"  name="content" placeholder="new username..">
+            <label for="content">Password</label>
+            <input th:name="password" type="text"  name="content" placeholder="new password..">
+            <button class="btn" type="submit">Save Changes</button>
+            <button class="btn cancel" type="button" onclick="closeForm()">Close</button>
+
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
   }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
 }
 </script>
 
 
 
-
-
-<h1 style=" text-align: center; width: 100%; margin-top: 60px; "> Alfred Admin </h1>
-<h2 style=" text-align: center; width: 100%; margin-top: 60px; "> New task</h2>
-
-<div style=" margin-bottom: 50px;  margin: 0 auto; 140px; width:50%;" class="card">
-
-    <div>
-        <form method="post" th:action="@{/todo/post}" th:object="${toDo}">
-
-            <label for="subject">Subject</label>
-            <select id="subject"  name="subject" required>
-                <option value="Wayne Enterprices">Wayne Enterprices</option>
-                <option value="GPD">GPD</option>
-                <option value="Wayne Manor">Wayne Manor</option>
-                <option value="Robin">Robin</option>
-                <option value="Arkham Asylum">Arkham Asylum</option>
-                <option value="Lucius Fox">Lucius Fox</option>
-                <option value="Other">Other</option>
-            </select>
-            <label for="content">Content</label>
-            <input type="text" id="content" name="content" placeholder="Content..">
-            <input type="submit" value="Create">
-        </form>
-    </div>
-</div>
-</div>
-
-
-<h2 style=" text-align: center; width: 100%; margin-top: 60px; "> Edit Users</h2>
-
- <div  class="custom-div">
-
-<form th:action="@{/username/delete}" method="post">
-    <table id="customers">
-        <tr>
-            <th>Username</th>
-            <th>Delete</th>
-        </tr>
-        <tr th:each="user : ${users}">
-
-            <td th:text="${user.username}">
-
-            </td>
-            <td><label class="container">
-                <div class="checkbox-wrapper-1">
-                    <input name="usernames" th:value="${user.username}" id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
-                    <label for="example-1"></label>
-                </div>
-            </label>
-
-        </tr>
-
-    </table>
-    <input style="margin-bottom:10px;" type="submit" value="Submit">
-</form>
-
-
-
-
-</div>
-
-<div style=" margin-top: 30px">hejehj</div>
+<div style=" color:rgb(80, 92, 124) margin-top: 30px"></div>
 
 
 <a th:href="@{/admin-page}" class="footer">

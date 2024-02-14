@@ -37,10 +37,11 @@
 
 <div class="topnav" id="myTopnav">
 
-  <a th:href="@{/home}" class="active"><img  class="active" src="../static/images/Batman-logo.png"
-                                             width="40"></a>
+  <a th:href="@{/}" class="active"><img
+          class="active" src="../static/images/Batman-logo.png" width="40"></a>
   <a th:href="@{/gadgets}">Gadgets</a>
-  <a th:href="@{/todo}">To Do List</a>
+  <a th:href="@{/todo}">BatList</a>
+  <a th:href="@{/about}">About</a>
   <a  th:href="@{/logout}">Log Out</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
@@ -62,17 +63,27 @@ function myFunction() {
 
 
 <div>
-  <h1 style=" text-align: center; width: 100%; margin-top: 60px; "> Bat List </h1>
+  <div style="display: flex; justify-content: center; margin-top: 100px;">
+    <h1 style="padding: 10px; color: black; text-align: center; -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px;">BatList</h1>
+  </div>
   <div class="custom-div">
 
     <table id="customers">
       <tr>
         <th>Subject</th>
         <th>Content</th>
+        <th>Check</th>
       </tr>
       <tr th:each="todo : ${todos}">
         <td th:text="${todo.subject}"></td>
         <td th:text="${todo.content}"></td>
+        <td style="position: relative;">
+          <div class="checkbox-wrapper-1" style="position: absolute; top: 50%; transform: translateY(-50%);">
+            <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
+            <label for="example-1"></label>
+          </div>
+        </td>
+
       </tr>
     </table>
 
@@ -92,10 +103,83 @@ function myFunction() {
       }
       /* ... Andra stilar för större skärmar om det behövs ... */
     }
+
+
+    /* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
   </style>
   </div>
 
 </div>
+
+
+
+
 <div style=" margin-top: 30px">hejehj</div>
 
 

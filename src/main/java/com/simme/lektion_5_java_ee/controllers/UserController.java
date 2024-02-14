@@ -12,17 +12,19 @@ import com.simme.lektion_5_java_ee.repositories.ToDoRepository;
 import com.simme.lektion_5_java_ee.services.ToDoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -85,13 +87,71 @@ public class UserController {
 
     @GetMapping("/admin-page")
     public String adminPage(Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+        if (authentication != null && authentication.isAuthenticated()) {
+
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) principal;
+                String username = userDetails.getUsername();
+
+                UserEntity user = userEntityDetailsService.getUserByUsername(username);
+                model.addAttribute("currentUser", user);
+            }
+        }
+
         List<ToDo> toDos = toDoService.getToDos();
         List<UserEntity> users = userEntityDetailsService.getUserNames();
-
         model.addAttribute("todos", toDos);
         model.addAttribute("users", users);
+
         return "admin-page";
     }
+
+
+    @PostMapping("/update")
+    public String updateUser(
+            @RequestParam("id") Long id,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            Model model)
+    {
+
+        Optional<UserEntity> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) {
+
+            model.addAttribute("errorMessage", "User not found");
+            return "error-page";
+        }
+
+
+        UserEntity user = optionalUser.get();
+        user.setUsername(username);
+
+        user.setPassword(
+                appPasswordConfig.bCryptPasswordEncoder().encode(user.getPassword())
+        );
+
+        try {
+
+            userRepository.save(user);
+
+            model.addAttribute("successMessage", "User updated successfully");
+        } catch (Exception e) {
+            // Om det uppstår ett fel, visa felmeddelande
+            model.addAttribute("errorMessage", "Failed to update user");
+            return "error-page";
+        }
+
+        return "redirect:admin-page";
+    }
+
+
+
+
 
     @PostMapping("/todo/post")
     public String postToDoMany(
@@ -106,41 +166,36 @@ public class UserController {
         return "redirect:/admin-page";
     }
 
-    @PostMapping("/username/delete")
-    public String deleteMany(@RequestParam("usernames") List<String> usernames, Model model) {
+    @PostMapping("/id/delete")
+    public String deleteMany(@RequestParam("ids") List<Long> ids, Model model) {
 
         try {
-            for(String username : usernames) {
-                userEntityDetailsService.deleteByUsername(username);
+            for(Long id : ids) {
+                userEntityDetailsService.deleteById(id);
             }
             List<UserEntity> users = userEntityDetailsService.getUserNames();
             model.addAttribute("users", users);
             model.addAttribute("successMessage", "User deleted successfully");
 
+
+
         } catch (UsernameNotFoundException e) {
 
-            model.addAttribute("errorMessage", "User not found");
+            model.addAttribute("errorMessage", "User with the provided ID not found");
         }
+        System.out.println("ids: " + ids);
     return "admin-page";
     }
 
-    @PutMapping("/update")
-    public String updateMany(@RequestParam("usernames") List<String> usernames, Model model) {
 
-        try {
-            for(String username : usernames) {
-                userEntityDetailsService.updateUser(username);
-            }
-            List<UserEntity> users = userEntityDetailsService.getUserNames();
-            model.addAttribute("users", users);
-            model.addAttribute("successMessage", "User updated successfully");
 
-        } catch (UsernameNotFoundException e) {
+    @GetMapping("/about")
+    public String aboutPage() {
+        return "about";
 
-            model.addAttribute("errorMessage", "User not found");
-        }
-        return "admin-page";
     }
+
+
 
 
     @GetMapping("/gadgets")
@@ -159,6 +214,8 @@ public class UserController {
     @GetMapping("/users")
     public String getUsers (Model model){
         List<UserEntity> users = userEntityDetailsService.getUserNames();
+        List<Long> userIds = userEntityDetailsService.getUserIds();
+        List<String> userpasswords = userEntityDetailsService.getUserPasswords();
         model.addAttribute("users", users);
         return "users";
     }

@@ -16,10 +16,11 @@
 
 <div class="topnav" id="myTopnav">
 
-  <a th:href="@{/home}" class="active"><img  class="active" src="../static/images/Batman-logo.png"
+  <a th:href="@{/}" class="active"><img  class="active" src="../static/images/Batman-logo.png"
                                              width="40"></a>
   <a th:href="@{/gadgets}">Gadgets</a>
-  <a th:href="@{/todo}">To Do List</a>
+  <a th:href="@{/todo}">BatList</a>
+  <a th:href="@{/about}">About</a>
   <a  th:href="@{/logout}">Log Out</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
@@ -42,8 +43,11 @@ function myFunction() {
 
 
 <div style="text-align: center;">
+  <div style="display: flex; justify-content: center; margin-top: 100px;">
+    <h1 style="padding: 10px; color: black; text-align: center; -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px;">Lucius Fox Gadget Shop</h1>
+  </div>
 
-  <h1 > Lucius Fox Gadget Shop </h1>
+
 
 
 </div>
@@ -74,7 +78,7 @@ function myFunction() {
 
 
 <a    th:href="@{/admin-page}" class="footer">
-  <div style="margin-right: 10px;">
+  <div style="margin-right: 20px;">
     Admin
   </div>
 </a>

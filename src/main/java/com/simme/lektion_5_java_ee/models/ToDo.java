@@ -21,6 +21,7 @@ public class ToDo {
 
     private String subject;
     private String content;
+    private boolean isDone;
 
     public ToDo() {
     }

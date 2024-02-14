@@ -44,6 +44,10 @@ public class UserEntity implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     // TODO - ? extends what does it do?
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -114,5 +118,9 @@ public class UserEntity implements UserDetails {
 
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public long getId() {
+        return id;
     }
 }
