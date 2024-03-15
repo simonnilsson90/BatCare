@@ -150,9 +150,6 @@ public class UserController {
     }
 
 
-
-
-
     @PostMapping("/todo/post")
     public String postToDoMany(
             @Valid ToDo toDo,
@@ -195,9 +192,6 @@ public class UserController {
 
     }
 
-
-
-
     @GetMapping("/gadgets")
     public String gadgetsPage() {
         return "gadgets";
@@ -210,6 +204,23 @@ public class UserController {
         model.addAttribute("todos", toDos);
         return "todo";
     }
+    @GetMapping("/")
+    public String getUsername(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserEntity) {
+                UserEntity userEntity = (UserEntity) principal;
+                Long userId = userEntity.getId();
+                Optional<UserEntity> currentUserOptional = userRepository.findById(userId);
+                currentUserOptional.ifPresent(currentUser -> model.addAttribute("currentUser", currentUser));
+            }
+        }
+        return "home";
+    }
+
+
+
 
     @GetMapping("/users")
     public String getUsers (Model model){

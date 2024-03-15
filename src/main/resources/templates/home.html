@@ -9,80 +9,181 @@
     <meta charset="UTF-8">
     <title>home</title>
 
-
     <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: rgb(80,92,124);
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
 }
 
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
 
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
 
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
 
+.dropdown a:hover {background-color: #ddd;}
 
-
+.show {display: block;}
 </style>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(80, 92, 124);
+        }
+
+        .topnav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-link {
+            margin-left: auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .topnav a {
+                display: block;
+                text-align: center;
+                padding: 14px 16px;
+            }
+
+            .logout-link {
+                margin-left: auto;
+            }
+
+            .icon {
+                display: block;
+                text-align: right;
+                margin-top: 8px;
+            }
+
+            .topnav.responsive {
+                position: relative;
+            }
+
+            .topnav.responsive .icon {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+
+            .topnav.responsive a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+        }
+
+    </style>
 
 </head>
 
-<body  class="body" >
+<body class="body">
 
 <div class="topnav" id="myTopnav">
-
-    <a th:href="@{/}" class="active"><img  class="active" src="../static/images/Batman-logo.png" width="40"></a>
+    <a th:href="@{/}" class="active"><img class="active" src="../static/images/Batman-logo.png" width="40"></a>
     <a th:href="@{/gadgets}">Gadgets</a>
     <a th:href="@{/todo}">BatList</a>
     <a th:href="@{/about}">About</a>
-    <a  th:href="@{/logout}">Log Out</a>
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+    <a class="logout-link" th:href="@{/logout}">Log Out</a>
+
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>
 </div>
 
-
-
 <script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
 function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
   }
 }
 </script>
+
+<script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+
+    </script>
 <div style="text-align: center;">
-
-
-
-
-
-
     <div style="display: flex; justify-content: center; margin-top: 100px;">
         <h1 style="padding: 10px; color: black; text-align: center; -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px;">WELCOME TO BATCARE!</h1>
+
     </div>
-
-
-
-
-
-
-
+    <div th:if="${currentUser != null}">
+        <h2 style="padding: 10px; color: black; text-align: center; -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px;" th:text="${currentUser.username}"></h2>
+    </div>
 
     <div style=" margin-top: 10px;">
-        <img  src="../static/images/Batman-logo.png" alt="This image could not be loaded">
+        <img src="../static/images/Batman-logo.png" alt="This image could not be loaded">
     </div>
-
-
 </div>
 
-<a    th:href="@{/admin-page}" class="footer">
+<a th:href="@{/admin-page}" class="footer">
     <div style="margin-right: 20px;">
         Admin
     </div>
 </a>
 
 </body>
+
+
+
 </html>
+
+
