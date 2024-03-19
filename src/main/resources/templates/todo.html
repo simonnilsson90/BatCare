@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
  <link rel="stylesheet" type="text/css" href="/static/styles.css">
 <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
-
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <title>todo</title>
@@ -13,11 +13,13 @@
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+
 }
 
 #customers td, #customers th {
   border: 1px solid #ddd;
   padding: 8px;
+
 }
 
 #customers tr:nth-child(even){background-color: #f2f2f2;}
@@ -28,6 +30,17 @@
   text-align: left;
   background-color: #333;
   color: white;
+
+
+
+}
+
+.table-container {
+  overflow: hidden; /* För att se till att avrundningen tillämpas korrekt */
+  border-radius: 15px; /* Justera värdet efter önskad avrundning */
+  border: 1px solid #ddd; /* Använd samma border-stil som tabellen */
+  margin-right: 30px;
+  margin-left: 30px;
 }
 </style>
 
@@ -35,40 +48,15 @@
 
 <body class="body" >
 
-<div class="topnav" id="myTopnav">
-
-  <a th:href="@{/}" class="active"><img
-          class="active" src="../static/images/Batman-logo.png" width="40"></a>
-  <a th:href="@{/gadgets}">Gadgets</a>
-  <a th:href="@{/todo}">BatList</a>
-  <a th:href="@{/about}">About</a>
-  <a  th:href="@{/logout}">Log Out</a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
-  </a>
-</div>
-
-
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-</script>
-
+<div th:replace="fragments/navbar :: Tjena"></div>
 
 <div>
-  <div style="display: flex; justify-content: center; margin-top: 100px;">
-    <h1 style="padding: 10px; color: black; text-align: center; -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px;">BatList</h1>
+  <div  style="display: flex; margin-left:20px; center; margin-top: 40px;">
+    <h1 style="padding: 10px; color: black;  -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px;">BatList</h1>
   </div>
-  <div class="custom-div">
 
-    <table id="customers">
+  <div class="table-container ">
+    <table    id="customers">
       <tr>
         <th>Subject</th>
         <th>Content</th>
@@ -92,6 +80,7 @@ function myFunction() {
       .custom-div {
         margin-left: 10px; /* Justera till önskad mindre storlek för mindre skärmar */
         margin-right: 10px; /* Justera till önskad mindre storlek för mindre skärmar */
+        border-radius: 25px;
       }
       /* ... Andra stilar för mindre skärmar om det behövs ... */
     }
@@ -100,6 +89,7 @@ function myFunction() {
       .custom-div {
         margin-left: 80px; /* Justera till önskad storlek för större skärmar */
         margin-right: 80px; /* Justera till önskad storlek för större skärmar */
+       border-radius: 25px;
       }
       /* ... Andra stilar för större skärmar om det behövs ... */
     }

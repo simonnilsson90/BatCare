@@ -4,25 +4,13 @@
 <link rel="stylesheet" type="text/css" href="/static/styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
-<head>
+
+
+
     <meta charset="UTF-8">
     <title>admin</title>
 
-</head>
-<body class="body" >
 
-<script>
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-
-
-</script>
 
 <style>
     @media screen and (max-width: 767px) {
@@ -152,17 +140,9 @@ input[type=submit]:hover {
 
 </style>
 
+<div th:replace="fragments/navbar :: Tjena"></div>
 
-<div class="topnav" id="myTopnav">
-    <a th:href="@{/}" class="active"><img  class="active" src="../static/images/Batman-logo.png" width="40"></a>
-    <a th:href="@{/gadgets}">Gadgets</a>
-    <a th:href="@{/todo}">BatList</a>
-    <a th:href="@{/about}">About</a>
-    <a class="logout-link" th:href="@{/logout}">Log Out</a>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-    </a>
-</div>
+<body class=" body">
 
 
 

@@ -1,0 +1,55 @@
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/static/styles.css">
+<link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
+<link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Acount</title>
+</head>
+<body class="body">
+<div th:replace="fragments/navbar :: Tjena"></div>
+<div th:if="${currentUser != null}" class="bg-white overflow-hidden shadow rounded-lg border mx-10 my-10">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      User Profile
+    </h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">
+
+    </p>
+  </div>
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="sm:divide-y sm:divide-gray-200">
+      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">
+          User name
+        </dt>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="text" placeholder="Username" th:attr="placeholder=${currentUser.username}">
+      </div>
+
+      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">
+          Password
+        </dt>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="text" placeholder="******" >
+      </div>
+
+      <div class="py-3 lg:ml-5 md:ml-5 ">
+        <button class="   bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+          Update
+        </button>
+
+      </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+</body>
+</html>
