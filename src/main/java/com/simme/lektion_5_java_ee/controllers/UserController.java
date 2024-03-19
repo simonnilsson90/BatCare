@@ -219,6 +219,21 @@ public class UserController {
         return "home";
     }
 
+    @GetMapping("account")
+    public String getUser(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserEntity) {
+                UserEntity userEntity = (UserEntity) principal;
+                Long userId = userEntity.getId();
+                Optional<UserEntity> currentUserOptional = userRepository.findById(userId);
+                currentUserOptional.ifPresent(currentUser -> model.addAttribute("currentUser", currentUser));
+            }
+        }
+        return "account";
+    }
+
 
 
 

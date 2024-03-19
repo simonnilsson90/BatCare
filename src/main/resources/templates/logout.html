@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/static/styles.css">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,15 +14,15 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
         crossorigin="anonymous" />
 </head>
-<body>
+<body class="body">
 
 <div class="container-fluid text-center ">
 
   <!-- IS IT A POST? -->
-  <p>DO YOU WANT TO LOGOUT? </p>
+  <p style="padding: 10px; color: black;  -webkit-text-stroke: 1px #FFDE00; font-weight: bold; font-size: 40px;">DO YOU WANT TO LOGOUT? </p>
 
   <form method="post" th:action="@{/perform_logout}" >
-    <input type="submit"  value="Logout">
+    <input class="   bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type="submit"  value="Logout">
   </form>
 
 </div>
